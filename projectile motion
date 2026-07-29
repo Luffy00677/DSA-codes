@@ -1,0 +1,23 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int height(int speed){
+    float H;
+    int u =speed;
+    float g=9.8;
+    int x;
+    H=(u*u)*(sin(x)*sin(x))/(2*g);
+    return H;
+}
+
+int main() {
+   int speed;
+   cout << "speed:";
+   cin >> speed;
+   int angle;
+   cout << "angle of projection:";
+   cin >> angle;
+   int x = (angle *3.14)/180;
+   
+}
