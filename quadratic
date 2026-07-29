@@ -1,0 +1,31 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+    float a,b,c,D,m,n;
+
+    cout << "a, b, c: ";
+    cin >> a >> b >> c;
+    D = b*b - 4*a*c;
+
+    if (D > 0) {
+        m = (-b + sqrt(D))/(2*a);
+        n = (-b - sqrt(D))/(2*a);
+
+        cout << "different roots";
+        cout << "Root 1 = " << m << endl;
+        cout << "Root 2 = " << n << endl;
+    }
+    else if (D == 0) {
+        m = -b/(2*a);
+
+        cout << "equal roots";
+        cout << "Root 1 = Root 2 = " << m << endl;
+    }
+    else {
+        cout << "imaginary roots";
+    }
+
+    return 0;
+}
