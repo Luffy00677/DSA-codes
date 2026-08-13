@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+struct node{
+    int data;
+    node* next;
+};
+
+int main() {
+ 
+    node* head = new node{1,NULL};
+     head->next = new node {2,NULL};
+     head->next->next = new node {3,NULL};
+     head->next->next->next = new node {2,NULL};
+     head->next->next->next->next = new node {4,NULL};
+     head->next->next->next->next->next = new node {4,NULL};
+     head->next->next->next->next->next->next = new node {2,NULL};
+
+    node* temp1 = head;
+    while(temp1 != NULL){
+        node* temp2 = temp1->next;
+        while(temp2 != NULL){
+            if(temp1->data == temp2->data){
+                cout << "duplicate is" << temp1->data;
+                break;
+            }
+          temp2 = temp2->next;
+        }
+        temp1 = temp1->next;
+    }
+  return 0;
+
+
+}
