@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 100;
+int stackArr[MAX];
+int top = -1;
+
+void push(int x) {
+    if (top == MAX - 1) {
+        cout << "Stack Overflow\n";
+        return;
+    }
+    stackArr[++top] = x;
+}
+
+void pop() {
+    if (top == -1) {
+        cout << "Stack Underflow\n";
+        return;
+    }
+    cout << "Popped: " << stackArr[top--] << endl;
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    pop();
+    pop();
+    pop();
+    pop();  // to show underflow message
+    return 0;
+}
