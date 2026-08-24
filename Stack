@@ -28,6 +28,5 @@ int main() {
     pop();
     pop();
     pop();
-    pop();  // to show underflow message
     return 0;
 }
