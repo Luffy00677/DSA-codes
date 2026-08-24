@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+int n;
+int* queueArr;
+int front = -1, rear = -1;
+
+void enqueue(int x) {
+    if (rear == n - 1) {
+        cout << "Queue Overflow\n";
+        return;
+    }
+    if (front == -1) front = 0;
+    queueArr[++rear] = x;
+}
+
+void dequeue() {
+    if (front == -1 || front > rear) {
+        cout << "Queue Underflow\n";
+        return;
+    }
+    cout << "Dequeued: " << queueArr[front++] << endl;
+}
+
+int main() {
+    cout << "Enter size of queue: ";
+    cin >> n;
+    queueArr = new int[n];
+
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    dequeue();
+    dequeue();
+    dequeue();
+    dequeue();
+
+    delete[] queueArr;
+    return 0;
+}
