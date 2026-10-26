@@ -1,0 +1,179 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct node {
+    int data, h;
+    node *left, *right;
+};
+
+node* create(int x) {
+    node* p = new node;
+    p->data = x;
+    p->h = 0;
+    p->left = p->right = NULL;
+    return p;
+}
+
+int height(node* root) {
+    if(root == NULL)
+        return -1;
+    return root->h;
+}
+
+int balance(node* root) {
+    if(root == NULL)
+        return 0;
+    return height(root->left) - height(root->right);
+}
+
+node* rightRotate(node* y) {
+    node* x = y->left;
+    node* t = x->right;
+
+    x->right = y;
+    y->left = t;
+
+    y->h = 1 + max(height(y->left), height(y->right));
+    x->h = 1 + max(height(x->left), height(x->right));
+
+    return x;
+}
+
+node* leftRotate(node* x) {
+    node* y = x->right;
+    node* t = y->left;
+
+    y->left = x;
+    x->right = t;
+
+    x->h = 1 + max(height(x->left), height(x->right));
+    y->h = 1 + max(height(y->left), height(y->right));
+
+    return y;
+}
+
+node* insert(node* root, int x) {
+    if(root == NULL)
+        return create(x);
+
+    if(x < root->data)
+        root->left = insert(root->left, x);
+    else if(x > root->data)
+        root->right = insert(root->right, x);
+    else
+        return root;
+
+    root->h = 1 + max(height(root->left),
+                       height(root->right));
+
+    int b = balance(root);
+
+    if(b > 1 && x < root->left->data)
+        return rightRotate(root);
+
+    if(b < -1 && x > root->right->data)
+        return leftRotate(root);
+
+    if(b > 1 && x > root->left->data) {
+        root->left = leftRotate(root->left);
+        return rightRotate(root);
+    }
+
+    if(b < -1 && x < root->right->data) {
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
+    }
+
+    return root;
+}
+
+node* deleteNode(node* root, int x) {
+    if(root == NULL)
+        return NULL;
+
+    if(x < root->data)
+        root->left = deleteNode(root->left, x);
+
+    else if(x > root->data)
+        root->right = deleteNode(root->right, x);
+
+    else {
+        if(root->left == NULL) {
+            node* temp = root->right;
+            delete root;
+            return temp;
+        }
+
+        if(root->right == NULL) {
+            node* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        node* temp = root->right;
+
+        while(temp->left != NULL)
+            temp = temp->left;
+
+        root->data = temp->data;
+
+        root->right = deleteNode(root->right, temp->data);
+    }
+
+    root->h = 1 + max(height(root->left),
+                        height(root->right));
+
+    int b = balance(root);
+
+    if(b > 1 && balance(root->left) >= 0)
+        return rightRotate(root);
+
+    if(b > 1 && balance(root->left) < 0) {
+        root->left = leftRotate(root->left);
+        return rightRotate(root);
+    }
+
+    if(b < -1 && balance(root->right) <= 0)
+        return leftRotate(root);
+
+    if(b < -1 && balance(root->right) > 0) {
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
+    }
+
+    return root;
+}
+
+void inorder(node* root) {
+    if(root == NULL)
+        return;
+
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+int main() {
+    node* root = NULL;
+
+    root = insert(root, 30);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 10);
+    root = insert(root, 25);
+    root = insert(root, 35);
+    root = insert(root, 50);
+
+    cout << "AVL tree after insertion: ";
+    inorder(root);
+    cout << endl;
+
+    root = deleteNode(root, 40);
+
+    cout << "AVL tree after deleting 40: ";
+    inorder(root);
+    cout << endl;
+
+    return 0;
+}
