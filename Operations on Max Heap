@@ -1,3 +1,9 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void heapify(int a[], int n, int i);
+
 void createHeap(int a[], int n) {
     for(int i = n/2-1; i >= 0; i--)
         heapify(a, n, i);
@@ -51,4 +57,37 @@ void heapSort(int a[], int n) {
         swap(a[0], a[i]);
         heapify(a, i, 0);
     }
+}
+
+int main() {
+    int a[100] = {10, 20, 15, 30, 40};
+    int n = 5;
+
+    createHeap(a, n);
+    cout << "Max heap: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+
+    insert(a, n, 50);
+    cout << "After insertion: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+
+    cout << "Search 30: " << (search(a, n, 30) ? "Found" : "Not found") << endl;
+
+    deleteMax(a, n);
+    cout << "After deleting maximum: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+
+    heapSort(a, n);
+    cout << "Heap sort: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+
+    return 0;
 }
