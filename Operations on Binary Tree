@@ -52,3 +52,18 @@ node* deleteNode(node* root, int x) {
 
     return root;
 }
+
+int main() {
+    node* root = create(10);
+    root = insert(root, 5);
+    root = insert(root, 15);
+    root = insert(root, 3);
+    root = insert(root, 7);
+
+    cout << "Search 15: " << (search(root, 15) ? "Found" : "Not found") << endl;
+
+    root = deleteNode(root, 3);
+    cout << "Search 3 after deletion: " << (search(root, 3) ? "Found" : "Not found") << endl;
+
+    return 0;
+}
