@@ -1,3 +1,12 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct node {
+    int data;
+    node *left, *right;
+};
+
 node* create(int x) {
     node* p = new node;
     p->data = x;
@@ -54,4 +63,22 @@ node* deleteMax(node* root) {
     }
 
     return root;
+}
+
+int main() {
+    node* root = NULL;
+
+    root = insert(root, 10);
+    root = insert(root, 20);
+    root = insert(root, 15);
+    root = insert(root, 8);
+
+    cout << "Maximum element: " << root->data << endl;
+    cout << "Search 15: " << (search(root, 15) ? "Found" : "Not found") << endl;
+
+    root = deleteMax(root);
+    if(root != NULL)
+        cout << "Root after deleteMax: " << root->data << endl;
+
+    return 0;
 }
