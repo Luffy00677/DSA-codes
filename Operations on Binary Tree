@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+struct node {
+    int data;
+    node *left, *right;
+};
+
+node* create(int x) {
+    node* p = new node;
+    p->data = x;
+    p->left = p->right = NULL;
+    return p;
+}
+
+node* insert(node* root, int x) {
+    if(root == NULL)
+        return create(x);
+
+    if(root->left == NULL)
+        root->left = create(x);
+    else if(root->right == NULL)
+        root->right = create(x);
+    else
+        insert(root->left, x);
+
+    return root;
+}
+
+bool search(node* root, int x) {
+    if(root == NULL)
+        return false;
+
+    if(root->data == x)
+        return true;
+
+    return search(root->left, x) ||
+           search(root->right, x);
+}
+
+node* deleteNode(node* root, int x) {
+    if(root == NULL)
+        return NULL;
+
+    if(root->data == x) {
+        if(root->left == NULL) return root->right;
+        if(root->right == NULL) return root->left;
+    }
+
+    root->left = deleteNode(root->left, x);
+    root->right = deleteNode(root->right, x);
+
+    return root;
+}
