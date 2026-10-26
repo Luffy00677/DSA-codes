@@ -1,0 +1,57 @@
+node* create(int x) {
+    node* p = new node;
+    p->data = x;
+    p->left = p->right = NULL;
+    return p;
+}
+
+node* insert(node* root, int x) {
+    if(root == NULL)
+        return create(x);
+
+    if(x > root->data)
+        swap(x, root->data);
+
+    if(root->left == NULL)
+        root->left = create(x);
+    else if(root->right == NULL)
+        root->right = create(x);
+    else
+        insert(root->left, x);
+
+    return root;
+}
+
+bool search(node* root, int x) {
+    if(root == NULL)
+        return false;
+
+    if(root->data == x)
+        return true;
+
+    return search(root->left, x) ||
+           search(root->right, x);
+}
+
+node* deleteMax(node* root) {
+    if(root == NULL)
+        return NULL;
+
+    if(root->left == NULL && root->right == NULL) {
+        delete root;
+        return NULL;
+    }
+
+    if(root->left != NULL) {
+        root->data = root->left->data;
+        delete root->left;
+        root->left = NULL;
+    }
+    else {
+        root->data = root->right->data;
+        delete root->right;
+        root->right = NULL;
+    }
+
+    return root;
+}
