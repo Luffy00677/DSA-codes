@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void DFSUtil(int u, vector<vector<int>>& adj,
+             vector<bool>& visited) {
+    visited[u] = true;
+    cout << u << " ";
+
+    for (int v : adj[u]) {
+        if (!visited[v])
+            DFSUtil(v, adj, visited);
+    }
+}
+
+void DFS(int V, vector<vector<int>>& adj, int start) {
+    vector<bool> visited(V, false);
+    DFSUtil(start, adj, visited);
+}
+
+int main() {
+    int V, E;
+    cin >> V >> E;
+
+    vector<vector<int>> adj(V);
+
+    for (int i = 0; i < E; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    int start;
+    cin >> start;
+
+    DFS(V, adj, start);
+
+    return 0;
+}
